@@ -1,3 +1,6 @@
+
+
+
 /* Tank Combat - HTML5 Canvas, vector-style rendering */
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
@@ -303,9 +306,10 @@ function roundedRectPath(x, y, w, h, r) {
 }
 
 function drawWall(rect) {
-  // Bright green vector-style line walls
+  // Bright vector-style line walls; deadly walls shown in red
   const { x, y, w, h } = wallPx(rect);
-  const neon = '#00ff66';
+  const neon = rect.deadly ? '#ff3355' : '#00ff66';
+  const inner = rect.deadly ? '#ffd6db' : '#ccffdd';
   ctx.save();
   ctx.lineWidth = Math.max(2, Math.min(w, h) * 0.15);
   ctx.strokeStyle = neon;
@@ -317,7 +321,7 @@ function drawWall(rect) {
   ctx.shadowBlur = 0;
   ctx.globalAlpha = 0.9;
   ctx.lineWidth = Math.max(1, Math.min(w, h) * 0.07);
-  ctx.strokeStyle = '#ccffdd';
+  ctx.strokeStyle = inner;
   ctx.strokeRect(x, y, w, h);
   ctx.restore();
 }
@@ -522,14 +526,17 @@ function hasLineOfSight(ax, ay, bx, by) {
 // Navigation grid for simple path following
 const NAV = { cols: 28, rows: 16, grid: [], dist: [], cw: 0, ch: 0, W: 0, H: 0, lastPlayerCell: -1, repathTimer: 0 };
 function navIndex(cx, cy) { return cy * NAV.cols + cx; }
+
 function worldToCell(x, y) {
   const cx = clamp(Math.floor(x / NAV.cw), 0, NAV.cols - 1);
   const cy = clamp(Math.floor(y / NAV.ch), 0, NAV.rows - 1);
   return { cx, cy };
 }
+
 function cellCenter(cx, cy) {
   return { x: (cx + 0.5) * NAV.cw, y: (cy + 0.5) * NAV.ch };
 }
+
 function rebuildNavGrid() {
   NAV.W = canvas.clientWidth; NAV.H = canvas.clientHeight;
   NAV.cw = NAV.W / NAV.cols; NAV.ch = NAV.H / NAV.rows;
@@ -542,6 +549,7 @@ function rebuildNavGrid() {
     }
   }
 }
+
 function computeNavDistancesFromPlayer() {
   const pc = worldToCell(player.x, player.y);
   const start = navIndex(pc.cx, pc.cy);
@@ -570,6 +578,7 @@ function computeNavDistancesFromPlayer() {
   }
   NAV.lastPlayerCell = start;
 }
+
 function ensureNav(dt) {
   NAV.repathTimer -= dt;
   const W = canvas.clientWidth, H = canvas.clientHeight;
@@ -585,6 +594,7 @@ function ensureNav(dt) {
     NAV.repathTimer = 0.25; // seconds
   }
 }
+
 function navWaypoint(ex, ey) {
   // Returns a world point in neighbor cell of enemy that reduces distance to player
   const ec = worldToCell(ex, ey);
@@ -820,4 +830,37 @@ function drawVignette() {
     ctx.fillRect(0, y, W, 1);
   }
   ctx.restore();
+}
+
+// Expose internals for browser console tinkering (non-breaking, live getters)
+if (typeof window !== 'undefined') {
+  const define = (obj, name, getter, setter) => {
+    const desc = { configurable: true, enumerable: true, get: getter };
+    if (setter) desc.set = setter;
+    Object.defineProperty(obj, name, desc);
+  };
+  const api = window.gc || {};
+  define(api, 'Bullet', () => Bullet);
+  define(api, 'Tank', () => Tank);
+  define(api, 'player', () => player);
+  define(api, 'enemy', () => enemy);
+  define(api, 'bullets', () => bullets, (v) => { bullets = v; });
+  define(api, 'scores', () => scores);
+  define(api, 'maze', () => maze);
+  define(api, 'wallPx', () => wallPx);
+  define(api, 'segRectIntersects', () => segRectIntersects);
+  define(api, 'circleRectCollision', () => circleRectCollision);
+  define(api, 'angleTo', () => angleTo);
+  define(api, 'angDiff', () => angDiff);
+  define(api, 'hasLineOfSight', () => hasLineOfSight);
+  define(api, 'ensureNav', () => ensureNav);
+  define(api, 'navWaypoint', () => navWaypoint);
+  define(api, 'distanceToWall', () => distanceToWall);
+  define(api, 'canvas', () => canvas);
+  define(api, 'ctx', () => ctx);
+  define(api, 'spawnExplosion', () => spawnExplosion);
+  define(api, 'playSFX', () => playSFX);
+  define(api, 'respawnLoser', () => respawnLoser);
+  define(api, 'resetPositions', () => resetPositions);
+  window.gc = api;
 }
