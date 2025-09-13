@@ -1,12 +1,180 @@
 <!DOCTYPE html>
-<html>
-    <body>
-        <a href="blocklyNinja/index.html">Ninjutsu</a>
-        <br>
-        <a href="tfDino/game.html">Dino</a>
-        <br>
-        <a href="asteroid/index.html">Angry Asteroid</a>
-        <br>
-        <a href="tankwar/index.html">Tank Combat</a>
-    </body>
-</html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>STEM Fest 2025 Games</title>
+    <style>
+      :root {
+        --bg1: #0a0b1a;
+        --bg2: #1a1c3a;
+        --accent: #ff4d6d;
+        --accent2: #00e5ff;
+        --card-bg: #121327;
+        --text: #f5f7ff;
+        --muted: #b6bfdb;
+        /* 3D layout variables */
+        --cardW: clamp(140px, 18vw, 220px);
+        --xBack: calc(var(--cardW) * 1.9);
+        --xNear: calc(var(--cardW) * 0.7);
+        --zBack: -180px;
+        --zNear: 100px;
+      }
+      * { box-sizing: border-box; }
+      html, body { height: 100%; }
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+        color: var(--text);
+        background: radial-gradient(1200px 600px at 50% -10%, var(--bg2), var(--bg1));
+        overflow-x: hidden;
+      }
+
+      header {
+        padding: 24px 20px 8px;
+        text-align: center;
+      }
+      header h1 {
+        margin: 0 0 6px;
+        font-size: clamp(24px, 4vw, 40px);
+        letter-spacing: 0.5px;
+      }
+      header p {
+        margin: 0;
+        color: var(--muted);
+        font-size: clamp(14px, 2vw, 18px);
+      }
+
+      /* 3D Half-circle Stage */
+      .stage {
+        position: relative;
+        width: min(100vw, 1200px);
+        height: calc(var(--cardW) * 2.2);
+        margin: 14px auto 0;
+        perspective: 1200px;
+        overflow: hidden; /* no scrollbars */
+      }
+      .deck {
+        position: absolute; inset: 0;
+        transform-style: preserve-3d;
+        display: grid; place-items: center;
+        pointer-events: none; /* allow clicking on any visible card surface */
+      }
+      a.card-3d { color: inherit; text-decoration: none; }
+      .card-3d {
+        position: absolute;
+        width: var(--cardW);
+        aspect-ratio: 2 / 3; /* match 1024x1536 posters */
+        background: var(--card-bg);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 16px;
+        box-shadow: 0 12px 36px rgba(0,0,0,0.45);
+        overflow: hidden;
+        transition: transform 220ms ease, box-shadow 220ms ease, filter 220ms ease;
+        /* base transform variables */
+        --tx: 0%;
+        --ty: -4%;
+        --tz: 0px;
+        --ry: 0deg;
+        --s: 1;
+        transform: translateX(var(--tx)) translateY(var(--ty)) translateZ(var(--tz)) rotateY(var(--ry)) scale(var(--s));
+        pointer-events: auto;
+      }
+      .card-3d:hover, .card-3d:focus-visible {
+        box-shadow: 0 18px 56px rgba(0,0,0,0.7);
+        filter: brightness(1.06);
+        transform: translateX(var(--tx)) translateY(calc(var(--ty) - 2%)) translateZ(calc(var(--tz) + 120px)) rotateY(0deg) scale(1.06);
+        z-index: 10;
+        outline: 0;
+      }
+      /* positions along a half circle arc using variables per card */
+      .card-3d:nth-child(1) { --tx: calc(-1 * var(--xBack)); --ty: -4%; --tz: var(--zBack); --ry: 20deg; --s: .86;  z-index: 1; }
+      .card-3d:nth-child(2) { --tx: calc(-1 * var(--xNear)); --ty: -2%; --tz: var(--zNear); --ry: 10deg; --s: 1;    z-index: 4; }
+      .card-3d:nth-child(3) { --tx: var(--xNear);               --ty: -2%; --tz: var(--zNear); --ry: -10deg;--s: .98; z-index: 3; }
+      .card-3d:nth-child(4) { --tx: var(--xBack);               --ty: -4%; --tz: var(--zBack); --ry: -20deg;--s: .86;  z-index: 2; }
+
+      .thumb { width: 100%; height: 100%; object-fit: contain; display: block; background: var(--card-bg); }
+      .label {
+        position: absolute; left: 0; right: 0; bottom: 0;
+        padding: 10px 12px;
+        font-size: 14px; color: #fff;
+        background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.65) 100%);
+        pointer-events: none; /* avoid blocking hover/click */
+      }
+
+      /* responsive tweaks so all 4 fit nicely */
+      @media (max-width: 900px) {
+        :root {
+          --cardW: clamp(120px, 22vw, 200px);
+          --xBack: calc(var(--cardW) * 1.7);
+          --xNear: calc(var(--cardW) * 0.65);
+          --zBack: -160px; --zNear: 80px;
+        }
+        .stage { height: calc(var(--cardW) * 2.2); }
+      }
+      @media (max-width: 600px) {
+        :root {
+          --cardW: clamp(90px, 24vw, 160px);
+          --xBack: calc(var(--cardW) * 1.6);
+          --xNear: calc(var(--cardW) * 0.55);
+          --zBack: -140px; --zNear: 60px;
+        }
+        /* slightly reduce back-card scale to avoid crowding */
+        .card-3d:nth-child(1), .card-3d:nth-child(4) { --s: .8; }
+        .stage { height: calc(var(--cardW) * 2.2); }
+      }
+
+      footer { text-align: center; padding: 8px 16px 28px; color: var(--muted); font-size: 12px; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>STEM Fest 2025</h1>
+      <p>Pick a game to play — tap a card to start</p>
+    </header>
+
+    <section class="stage" aria-label="Game selection">
+      <div class="deck">
+        <a class="card-3d" href="asteroid/index.html" aria-label="Play Angry Asteroid">
+          <picture>
+            <source srcset="images/angryAsteroid.png" type="image/png" />
+            <img class="thumb" src="images/angry-asteroid.svg" alt="Angry Asteroid poster" />
+          </picture>
+          <div class="label">Angry Asteroid</div>
+        </a>
+
+        <a class="card-3d" href="blocklyNinja/index.html" aria-label="Play Blockly Ninja">
+          <picture>
+            <source srcset="images/blocklyNinja.png" type="image/png" />
+            <img class="thumb" src="images/blockly-ninja.svg" alt="Blockly Ninja poster" />
+          </picture>
+          <div class="label">Blockly Ninja</div>
+        </a>
+
+        <a class="card-3d" href="tfDino/game.html" aria-label="Play TensorFlow Dino">
+          <picture>
+            <source srcset="images/tfDino.png" type="image/png" />
+            <img class="thumb" src="images/tensorflow-dino.svg" alt="TensorFlow Dino poster" />
+          </picture>
+          <div class="label">TensorFlow Dino</div>
+        </a>
+
+        <a class="card-3d" href="tankwar/index.html" aria-label="Play Tank War">
+          <picture>
+            <source srcset="images/tankwar.png" type="image/png" />
+            <img class="thumb" src="images/tank-war.svg" alt="Tank War poster" />
+          </picture>
+          <div class="label">Tank War</div>
+        </a>
+      </div>
+    </section>
+
+    <footer>
+      STEM Fest 2025 — Have fun and learn! — Made by Matias Iacono
+    </footer>
+
+    <script>
+      // No JS needed for static 3D half-circle layout; kept for future interactivity.
+    </script>
+  </body>
+  </html>

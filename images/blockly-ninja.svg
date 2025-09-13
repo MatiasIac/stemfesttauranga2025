@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#111236"/>
+      <stop offset="1" stop-color="#1a1030"/>
+    </linearGradient>
+    <radialGradient id="burst" cx="20%" cy="0%" r="100%">
+      <stop offset="0%" stop-color="#ff4d6d" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#ff4d6d" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <style>
+      .title { font: 800 56px/1.1 system-ui,Segoe UI,Roboto,Arial; letter-spacing: 1px; fill: #ffffff; }
+      .subtitle { font: 500 20px system-ui,Segoe UI,Roboto,Arial; fill: #b6bfdb; }
+      .ninja { fill: #111827; stroke: #00e5ff; stroke-width: 5; filter: url(#glow); }
+      .eye { fill: #ffffff; }
+      .shuriken { fill: #cdeffd; stroke: #00a8c8; stroke-width: 3; }
+      .coin { fill: #ffd84d; stroke: #a87800; stroke-width: 4; }
+      .dragon { fill: #ff3b3b; stroke: #9c1010; stroke-width: 6; }
+      .block { fill: #2b2f55; stroke: #7aa3ff; stroke-width: 3; }
+    </style>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect width="1200" height="675" fill="url(#burst)"/>
+
+  <g transform="translate(48,72)">
+    <text class="title">BLOCKLY NINJA</text>
+    <text class="subtitle" y="44">Code your power. Defeat the dragons!</text>
+  </g>
+
+  <!-- Ninja -->
+  <g transform="translate(280,410)">
+    <circle class="ninja" cx="0" cy="0" r="78"/>
+    <rect class="ninja" x="-58" y="60" width="116" height="120" rx="24"/>
+    <rect fill="#111236" x="-52" y="-14" width="104" height="28" rx="8"/>
+    <circle class="eye" cx="-24" cy="0" r="6"/>
+    <circle class="eye" cx="24" cy="0" r="6"/>
+    <!-- Shuriken in hand -->
+    <g transform="translate(90,50) rotate(18)">
+      <polygon class="shuriken" points="0,-16 6,-6 16,0 6,6 0,16 -6,6 -16,0 -6,-6"/>
+    </g>
+  </g>
+
+  <!-- Coins -->
+  <g>
+    <circle class="coin" cx="470" cy="520" r="14"/>
+    <circle class="coin" cx="520" cy="490" r="12"/>
+    <circle class="coin" cx="560" cy="520" r="16"/>
+  </g>
+
+  <!-- Red dragon -->
+  <g transform="translate(930,350) rotate(8)">
+    <ellipse class="dragon" cx="0" cy="0" rx="88" ry="48"/>
+    <polygon class="dragon" points="88,0 130,-16 130,16"/>
+    <circle fill="#fff" cx="30" cy="-10" r="6"/>
+    <circle fill="#222" cx="30" cy="-10" r="3"/>
+  </g>
+
+  <!-- Blockly-like blocks -->
+  <g transform="translate(720,120)">
+    <rect class="block" x="0" y="0" width="210" height="36" rx="9"/>
+    <rect class="block" x="18" y="48" width="260" height="36" rx="9"/>
+    <rect class="block" x="36" y="96" width="190" height="36" rx="9"/>
+  </g>
+
+  <rect x="24" y="24" width="1152" height="627" rx="18" ry="18" fill="none" stroke="#00e5ff" stroke-opacity="0.25" stroke-width="3"/>
+</svg>
+

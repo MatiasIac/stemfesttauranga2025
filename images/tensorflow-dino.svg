@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0e1231"/>
+      <stop offset="1" stop-color="#0a0b1a"/>
+    </linearGradient>
+    <radialGradient id="burst" cx="80%" cy="15%" r="85%">
+      <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#00e5ff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <style>
+      .title { font: 800 56px/1.1 system-ui,Segoe UI,Roboto,Arial; letter-spacing: 1px; fill: #ffffff; }
+      .subtitle { font: 500 20px system-ui,Segoe UI,Roboto,Arial; fill: #b6bfdb; }
+      .dino { fill: #9be370; stroke: #3a7b1e; stroke-width: 6; }
+      .cactus { fill: #59c759; stroke: #1d7a1d; stroke-width: 5; }
+      .hand { fill: none; stroke: #ff4d6d; stroke-width: 6; filter: url(#glow); }
+      .dot { fill: #ffffff; opacity: .8; }
+    </style>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect width="1200" height="675" fill="url(#burst)"/>
+
+  <g transform="translate(48,72)">
+    <text class="title">TENSORFLOW DINO</text>
+    <text class="subtitle" y="44">Run, jump, wave your hands to play!</text>
+  </g>
+
+  <!-- Dino -->
+  <g transform="translate(360,470)">
+    <rect class="dino" x="-40" y="-80" width="100" height="80" rx="12"/>
+    <rect class="dino" x="40" y="-60" width="60" height="30" rx="8"/>
+    <rect class="dino" x="-10" y="0" width="28" height="36" rx="8"/>
+    <rect class="dino" x="26" y="0" width="28" height="36" rx="8"/>
+    <circle fill="#fff" cx="26" cy="-56" r="6"/>
+    <circle fill="#222" cx="26" cy="-56" r="3"/>
+  </g>
+
+  <!-- Cactus obstacles -->
+  <g transform="translate(800,500)">
+    <rect class="cactus" x="-12" y="-80" width="24" height="80" rx="8"/>
+    <rect class="cactus" x="-40" y="-40" width="22" height="40" rx="7"/>
+    <rect class="cactus" x="18" y="-50" width="22" height="50" rx="7"/>
+  </g>
+
+  <!-- Hand gesture outline -->
+  <g transform="translate(1020,180)">
+    <path class="hand" d="M-40,40 q20,-30 40,0 q10,-26 30,-10 q18,14 2,40 q-14,22 -44,24 q-34,2 -50,-26 q-10,-18 0,-28 z"/>
+    <circle class="dot" cx="-10" cy="70" r="4"/>
+    <circle class="dot" cx="10" cy="70" r="4"/>
+  </g>
+
+  <!-- Ground line -->
+  <line x1="80" y1="540" x2="1120" y2="540" stroke="#8aa0c0" stroke-opacity="0.35" stroke-width="3"/>
+
+  <rect x="24" y="24" width="1152" height="627" rx="18" ry="18" fill="none" stroke="#00e5ff" stroke-opacity="0.25" stroke-width="3"/>
+</svg>
+

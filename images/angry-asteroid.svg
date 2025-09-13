@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#111236"/>
+      <stop offset="1" stop-color="#0a0b1a"/>
+    </linearGradient>
+    <radialGradient id="burst" cx="50%" cy="10%" r="80%">
+      <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#00e5ff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <style>
+      .title { font: 700 56px/1.1 system-ui,Segoe UI,Roboto,Arial; letter-spacing: 1px; fill: #ffffff; }
+      .subtitle { font: 500 20px system-ui,Segoe UI,Roboto,Arial; fill: #b6bfdb; }
+      .stroke-neon { stroke: #ff4d6d; stroke-width: 6; filter: url(#glow); }
+      .ship { fill: #00e5ff; }
+      .asteroid { fill: #ffb86c; stroke: #6b3c22; stroke-width: 6; }
+      .rock { fill: #d87b33; stroke: #6b3c22; stroke-width: 4; }
+      .star { fill: #ffffff; opacity: .8 }
+    </style>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect width="1200" height="675" fill="url(#burst)"/>
+
+  <!-- Stars -->
+  <g opacity="0.8">
+    <circle class="star" cx="80" cy="90" r="2"/>
+    <circle class="star" cx="220" cy="60" r="2.5"/>
+    <circle class="star" cx="340" cy="120" r="1.5"/>
+    <circle class="star" cx="520" cy="80" r="2"/>
+    <circle class="star" cx="760" cy="70" r="2.5"/>
+    <circle class="star" cx="1040" cy="110" r="2"/>
+    <circle class="star" cx="980" cy="50" r="1.8"/>
+    <circle class="star" cx="1120" cy="160" r="1.6"/>
+  </g>
+
+  <!-- Title -->
+  <g transform="translate(48,72)">
+    <text class="title">ANGRY ASTEROID</text>
+    <text class="subtitle" y="44">Pilot your ship. Blast the rock!</text>
+  </g>
+
+  <!-- Big asteroid top center -->
+  <g transform="translate(780,90) rotate(-14)">
+    <circle class="asteroid" cx="0" cy="0" r="110"/>
+    <g fill="#6b3c22" opacity="0.35">
+      <circle cx="-40" cy="-20" r="22"/>
+      <circle cx="30" cy="-10" r="18"/>
+      <circle cx="10" cy="40" r="26"/>
+    </g>
+  </g>
+
+  <!-- Debris rocks -->
+  <g>
+    <ellipse class="rock" cx="1020" cy="260" rx="26" ry="18"/>
+    <ellipse class="rock" cx="920" cy="320" rx="18" ry="12"/>
+    <ellipse class="rock" cx="1080" cy="340" rx="20" ry="13"/>
+  </g>
+
+  <!-- Player ship bottom left -->
+  <g transform="translate(230,478) rotate(-8)">
+    <polygon class="ship" points="-30,20 60,0 -30,-20"/>
+    <polygon fill="#00a8c8" points="-30,14 18,0 -30,-14"/>
+    <polygon fill="#ff4d6d" points="-46,10 -30,0 -46,-10"/>
+    <line class="stroke-neon" x1="60" y1="0" x2="780" y2="-120"/>
+  </g>
+
+  <!-- HUD frame -->
+  <rect x="24" y="24" width="1152" height="627" rx="18" ry="18" fill="none" stroke="#00e5ff" stroke-opacity="0.25" stroke-width="3"/>
+</svg>
+
